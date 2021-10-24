@@ -1,18 +1,27 @@
-// Node server: no express, just a node web server that listens on port 5000
-import http from 'http';
+import express, { Request, Response, Application } from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
-const hostname = '127.0.0.1'; // IP address equivalent to 'localhost'
-const port = 5000;
+// Grant access to env vars in the project & set the port variable
+dotenv.config();
+const PORT = process.env.PORT;
 
-// Create the server
-const server = http.createServer((req, res) => {
+// Create the express server
+const app: Application = express();
 
-  // Set response headers
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  // Send the response body
-  res.end('Yo World');
+/**
+ * Create a route definition.
+ * The app.get() method defines a callback function that will be invoked whenever there
+ *  is an HTTP GET request with a path ('/') relative to the site root. The callback function
+ *  takes a request and a response object as arguments, and simply calls sendFile() on the
+ *  response to return the hello.html file"
+ */
+app.get('/', (req: Request, res: Response): void => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  res.sendFile(path.join(__dirname, '../public/hello.html'));
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server listening at http://${hostname}:${port}`);
+app.listen(PORT, (): void => {
+  console.log(`Server running on ${PORT}`);
 });
