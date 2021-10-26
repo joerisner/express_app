@@ -1,0 +1,25 @@
+queue_rules:
+  - name: default
+
+pull_request_rules:
+  - name: Automatic merge for dependabot PRs
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - title~=^Bump [^\s]+ from ([\d]+)\..+ to \1\.
+      - base=master
+    actions:
+      queue:
+        name: default
+  - name: Add depencies label when package.json is modified
+    conditions:
+      - files=package.json
+    actions:
+      queue:
+        name: default
+  - name: Automatic merge on approval
+    conditions:
+      - base=master
+      - '#approved-reviews-by>1'
+    actions:
+      queue:
+        name: default
