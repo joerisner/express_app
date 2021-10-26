@@ -11,8 +11,9 @@ pull_request_rules:
     conditions:
       - files=package.json
     actions:
-      merge:
-        method: merge
+      label:
+        add:
+          - dependencies
   - name: Automatic merge on approval
     conditions:
       - base=master
