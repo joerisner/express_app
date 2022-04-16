@@ -22,6 +22,11 @@ app.get('/', (req: Request, res: Response): void => {
   res.sendFile(path.join(__dirname, '../public/hello.html'));
 });
 
+app.get('/about', (req: Request, res: Response): void => {
+  const dirname = path.dirname(fileURLToPath(import.meta.url));
+  res.sendFile(path.join(dirname, '../public/about.html'));
+});
+
 app.listen(PORT, (): void => {
   console.log(`Server running on ${PORT}`);
 });
